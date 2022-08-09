@@ -1,0 +1,31 @@
+user
+  -id BINARY 16 (UUID) PRIMARY KEY
+  -name VARCHAR 100 NOT NULL
+  -phone_number VARCHAR 16 NOT NULL
+  -address TEXT NOT NULL
+  -email VARCHAR 100 NOT NULL
+  -password CHAR 72 NOT NULL
+  -created_at timestamp NOT NULL
+  -updated_at datetime NOT NULL
+
+pet
+  -id BINARY 16 (UUID) PRIMARY KEY
+  -id_owner UUID PRIMARY KEY
+  -name VARCHAR 100 NOT NULL
+  -age INT
+  -age_unit ENUM('Days', 'Months', 'Years')
+  -gender ENUM('Male', 'Female')
+  -feather_color ENUM('Black', 'White', 'Orange', 'Gray', 'Brown')
+  -weight DOUBLE
+  -weight_unit ENUM('g', 'kg')
+  -description TEXT
+  -status ENUM('Available', 'Adopted')
+  -created_at timestamp NOT NULL
+  -updated_at datetime NOT NULL
+
+-adopter
+  -id_adopter BINARY 16 (UUID) PRIMARY KEY
+  -id_pet BINARY 16 (UUID) PRIMARY KEY
+  -status ENUM('Pending', 'Accepted', 'Rejected')
+  -created_at timestamp NOT NULL
+  -updated_at datetime NOT NULL
