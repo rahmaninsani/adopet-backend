@@ -86,6 +86,19 @@ class PetService extends Service {
 
     return await super.update(payload, options);
   }
+
+  static async deletePet(id, transaction) {
+    const options = {
+      where: {
+        id: {
+          [sequelize.Op.eq]: uuidToBin(id, 1),
+        },
+      },
+      transaction,
+    };
+
+    return await super.delete(options);
+  }
 }
 
 PetService.model = Pet;

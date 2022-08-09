@@ -21,6 +21,13 @@ class PetController {
       const { idPet } = req.params;
       const pet = await PetService.findOnePetById(idPet);
 
+      if (pet === null) {
+        return res.status(404).json({
+          code: res.statusCode,
+          status: 'Pet Not Found',
+        });
+      }
+
       res.status(200).json({
         code: res.statusCode,
         status: 'OK',
@@ -92,26 +99,34 @@ class PetController {
     const transaction = await sequelize.transaction();
 
     try {
-      const { idFood } = req.params;
-      const { email } = req.user;
-      const { id: idUser } = await UserDbService.findOneUserByEmail(email);
+      const { idPet } = req.params;
+      const pet = await PetService.findOnePetById(idPet);
 
-      const deleteNutrition = await NutritionDbService.deleteNutrition({ idUser, idFood }, transaction);
-      if (deleteNutrition < 1) {
+      if (!pet) {
         return res.status(404).json({
           code: res.statusCode,
-          status: 'Food Nutrition Not Found',
+          status: 'Pet Not Found',
         });
       }
 
-      await FoodDbService.deleteFood({ idFood }, transaction);
+      const { email } = req.user;
+      const user = await UserService.findOneUserByEmail(email, true);
+
+      if (user.id !== pet.idOwner) {
+        return res.status(403).json({
+          code: res.statusCode,
+          status: 'Different Owner',
+        });
+      }
+
+      await PetService.deletePet(pet.id, transaction);
       await transaction.commit();
 
-      res.status(204).json({
+      res.status(200).json({
         code: res.statusCode,
-        status: 'No Content',
+        status: 'OK',
       });
-    } catch (error) {
+    } catch (err) {
       transaction.rollback();
       res.sendStatus(500).end();
     }
