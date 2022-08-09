@@ -5,6 +5,10 @@ class Service {
     return await this.model.findOne({ raw: true, ...options });
   }
 
+  static async findAll(options) {
+    return await this.model.findAll({ raw: true, ...options });
+  }
+
   static async findLastInsertedRow(transaction = null) {
     return await this.model.findOne({
       raw: true,
