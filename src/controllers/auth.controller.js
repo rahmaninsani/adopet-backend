@@ -51,7 +51,7 @@ class AuthController {
         });
       }
 
-      const accessToken = generateAccessToken({ name: user.name, email: user.email });
+      const accessToken = generateAccessToken({ email: user.email });
 
       res.status(201).json({
         code: res.statusCode,

@@ -8,7 +8,7 @@ const petRoute = require('./pet.route');
 
 router.use('/signup', signupRoute);
 router.use('/signin', signinRoute);
-router.use('/pets', isAuthenticated, petRoute);
+router.use('/pets', petRoute);
 router.use('*', (req, res) => {
   res.status(404).json({
     code: res.statusCode,

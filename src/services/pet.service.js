@@ -18,14 +18,20 @@ class PetService extends Service {
     return await super.findAll(options);
   }
 
-  static async createPet(user, transaction) {
-    const hashedPassword = await hash(user.password);
+  static async createPet(pet, transaction) {
     const payload = {
-      name: user.name,
-      phoneNumber: user.phoneNumber,
-      address: user.address,
-      email: user.email,
-      password: hashedPassword,
+      idOwner: pet.idOwner,
+      name: pet.name,
+      kind: pet.kind,
+      age: pet.age,
+      ageUnit: pet.ageUnit,
+      gender: pet.gender,
+      featherColor: pet.featherColor,
+      weight: pet.weight,
+      weightUnit: pet.weightUnit,
+      photo: pet.photo,
+      description: pet.description,
+      status: pet.status,
     };
 
     const options = { transaction };
