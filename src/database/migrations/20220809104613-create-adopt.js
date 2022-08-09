@@ -2,7 +2,7 @@
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('adopter', {
+    await queryInterface.createTable('adopt', {
       idAdopter: {
         allowNull: false,
         field: 'id_adopter',
@@ -25,6 +25,7 @@ module.exports = {
       },
       status: {
         allowNull: false,
+        defaultValue: 'Pending',
         type: Sequelize.ENUM('Pending', 'Accepted', 'Rejected'),
       },
       createdAt: {
@@ -40,6 +41,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('adopter');
+    await queryInterface.dropTable('adopt');
   },
 };

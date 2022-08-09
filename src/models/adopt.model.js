@@ -3,7 +3,7 @@
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-  class Adopter extends Model {
+  class Adopt extends Model {
     static associate(models) {
       this.belongsTo(models.User, {
         foreignKey: 'id_adopter',
@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       });
     }
   }
-  Adopter.init(
+  Adopt.init(
     {
       idAdopter: {
         allowNull: false,
@@ -37,6 +37,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       status: {
         allowNull: false,
+        defaultValue: 'Pending',
         type: DataTypes.ENUM('Pending', 'Accepted', 'Rejected'),
       },
       createdAt: {
@@ -52,9 +53,9 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: 'Adopter',
-      tableName: 'adopter',
+      modelName: 'Adopt',
+      tableName: 'adopt',
     }
   );
-  return Adopter;
+  return Adopt;
 };

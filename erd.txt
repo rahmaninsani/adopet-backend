@@ -23,7 +23,7 @@ pet
   -created_at timestamp NOT NULL
   -updated_at datetime NOT NULL
 
--adopter
+-adopt
   -id_adopter BINARY 16 (UUID) PRIMARY KEY
   -id_pet BINARY 16 (UUID) PRIMARY KEY
   -status ENUM('Pending', 'Accepted', 'Rejected')

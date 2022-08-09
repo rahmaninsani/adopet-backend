@@ -9,9 +9,9 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'id_owner',
         as: 'Pet',
       });
-      this.hasMany(models.Adopter, {
+      this.hasMany(models.Adopt, {
         foreignKey: 'id_adopter',
-        as: 'Adopter',
+        as: 'Adopt',
       });
     }
   }
