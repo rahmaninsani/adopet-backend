@@ -18,6 +18,23 @@ class PetService extends Service {
     return await super.findAll(options);
   }
 
+  static async findAllFilter(filter) {
+    const options = {
+      attributes: {
+        exclude: ['id_owner'],
+        include: [
+          [binToUUID('id', 1), 'id'],
+          [binToUUID('id_owner', 1), 'idOwner'],
+        ],
+      },
+      where: {
+        ...filter,
+      },
+    };
+
+    return await super.findAll(options);
+  }
+
   static async findOnePetById(id) {
     const options = {
       attributes: {

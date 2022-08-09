@@ -16,6 +16,29 @@ class PetController {
     }
   }
 
+  static async getAllFilter(req, res) {
+    try {
+      const query = req.query;
+
+      if (query && Object.keys(query).length === 0 && Object.getPrototypeOf(query) === Object.prototype) {
+        return res.status(404).json({
+          code: res.statusCode,
+          status: 'Not Found',
+        });
+      }
+
+      const pets = await PetService.findAllFilter(query);
+
+      res.status(200).json({
+        code: res.statusCode,
+        status: 'OK',
+        data: { pets },
+      });
+    } catch (error) {
+      res.sendStatus(500).end();
+    }
+  }
+
   static async getDetail(req, res) {
     try {
       const { idPet } = req.params;
