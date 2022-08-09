@@ -14,6 +14,10 @@ Open your project directory in **Terminal/CMD** and run the following syntax:
 - `yarn row-insert`
 - `yarn dev`
 
+# Postman
+
+https://documenter.getpostman.com/view/9933041/VUjPHQcm
+
 # API Spec
 
 ## Base URL
