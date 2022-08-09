@@ -21,6 +21,10 @@ class Service {
     return await this.model.create(payload, options);
   }
 
+  static async update(payload, options) {
+    return await this.model.update(payload, options);
+  }
+
   static async delete(options) {
     return await this.model.destroy(options);
   }

@@ -2,13 +2,21 @@ const Service = require('./service');
 const { User } = require('../models');
 const { hash } = require('../utils');
 
+const { binToUUID } = require('../utils');
+
 class UserService extends Service {
-  static async findOneUserByEmail(email) {
+  static async findOneUserByEmail(email, isUuid = false) {
     const options = {
       where: {
         email,
       },
     };
+    if (isUuid) {
+      options.attributes = {
+        include: [[binToUUID('id', 1), 'id']],
+      };
+    }
+
     return await super.findOne(options);
   }
 

@@ -8,7 +8,6 @@ class AuthController {
 
     try {
       const { name, phoneNumber, address, email, password } = req.body;
-      console.log(req.body);
       const user = await UserService.findOneUserByEmail(email);
 
       if (user) {
