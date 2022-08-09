@@ -22,6 +22,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING(100),
       },
+      kind: {
+        allowNull: false,
+        type: Sequelize.ENUM('Dog', 'Cat'),
+      },
       age: {
         allowNull: false,
         type: Sequelize.INTEGER,
@@ -49,6 +53,11 @@ module.exports = {
         allowNull: false,
         field: 'weight_unit',
         type: Sequelize.ENUM('g', 'kg'),
+      },
+      photo: {
+        allowNull: false,
+        defaultValue: 'photo.png',
+        type: Sequelize.STRING(100),
       },
       description: {
         allowNull: false,

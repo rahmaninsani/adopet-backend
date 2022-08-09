@@ -31,6 +31,12 @@ module.exports = {
         allowNull: false,
         type: Sequelize.CHAR(72),
       },
+      profilePhoto: {
+        allowNull: false,
+        defaultValue: 'avatar.png',
+        field: 'profile_photo',
+        type: Sequelize.STRING(100),
+      },
       createdAt: {
         allowNull: false,
         field: 'created_at',

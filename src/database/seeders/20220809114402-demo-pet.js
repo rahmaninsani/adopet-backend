@@ -7,6 +7,7 @@ module.exports = {
     const preparedData = {
       id_owner: owner[0][0].id,
       name: 'Molly',
+      kind: 'Cat',
       age: 1,
       age_unit: 'Years',
       gender: 'Female',
