@@ -48,44 +48,6 @@ class AdoptController {
     }
   }
 
-  static async update(req, res) {
-    const transaction = await sequelize.transaction();
-
-    try {
-      const { idPet } = req.params;
-      const pet = await PetService.findOnePetById(idPet);
-
-      if (!pet) {
-        return res.status(404).json({
-          code: res.statusCode,
-          status: 'Pet Not Found',
-        });
-      }
-
-      const { email } = req.user;
-      const user = await UserService.findOneUserByEmail(email, true);
-
-      if (user.id === pet.idOwner) {
-        return res.status(403).json({
-          code: res.statusCode,
-          status: 'Same Owner',
-        });
-      }
-
-      await AdoptService.createAdopt();
-      await PetService.updatePet({ oldData: pet, newData: req.body }, transaction);
-      await transaction.commit();
-
-      res.status(200).json({
-        code: res.statusCode,
-        status: 'OK',
-      });
-    } catch (err) {
-      transaction.rollback();
-      res.sendStatus(500).end();
-    }
-  }
-
   static async delete(req, res) {
     const transaction = await sequelize.transaction();
 

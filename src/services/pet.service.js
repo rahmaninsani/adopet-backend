@@ -18,6 +18,23 @@ class PetService extends Service {
     return await super.findAll(options);
   }
 
+  static async findAllPetUser(id) {
+    const options = {
+      attributes: {
+        exclude: ['id_owner'],
+        include: [
+          [binToUUID('id', 1), 'id'],
+          [binToUUID('id_owner', 1), 'idOwner'],
+        ],
+      },
+      where: {
+        idOwner: id,
+      },
+    };
+
+    return await super.findAll(options);
+  }
+
   static async findAllFilter(filter) {
     const options = {
       attributes: {
@@ -48,6 +65,22 @@ class PetService extends Service {
         id: {
           [sequelize.Op.eq]: uuidToBin(id, 1),
         },
+      },
+    };
+    return await super.findOne(options);
+  }
+
+  static async findOnePetUser(idPet, idOwner) {
+    const options = {
+      attributes: {
+        exclude: ['id_owner', 'idOwner'],
+        include: [[binToUUID('id', 1), 'id']],
+      },
+      where: {
+        id: {
+          [sequelize.Op.eq]: uuidToBin(idPet, 1),
+        },
+        idOwner,
       },
     };
     return await super.findOne(options);
@@ -96,6 +129,23 @@ class PetService extends Service {
         },
         idOwner: {
           [sequelize.Op.eq]: uuidToBin(oldData.idOwner, 1),
+        },
+      },
+      transaction,
+    };
+
+    return await super.update(payload, options);
+  }
+
+  static async updatePetForAdopted(id, transaction) {
+    const payload = {
+      status: 'Adopted',
+    };
+
+    const options = {
+      where: {
+        id: {
+          [sequelize.Op.eq]: uuidToBin(id, 1),
         },
       },
       transaction,

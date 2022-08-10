@@ -1,6 +1,6 @@
 const sequelize = require('sequelize');
 const Service = require('./service');
-const { Adopt } = require('../models');
+const { Adopt, User } = require('../models');
 const { binToUUID, uuidToBin } = require('../utils');
 
 class AdoptService extends Service {
@@ -23,6 +23,29 @@ class AdoptService extends Service {
       },
     };
     return await super.findOne(options);
+  }
+
+  static async findAllAdopt(idPet) {
+    const options = {
+      attributes: [
+        [binToUUID('id_adopter', 1), 'idAdopter'],
+        [sequelize.col('User.name'), 'name'],
+      ],
+      include: [
+        {
+          model: User,
+          as: 'User',
+          attributes: [],
+          required: true,
+        },
+      ],
+      where: {
+        idPet: {
+          [sequelize.Op.eq]: uuidToBin(idPet, 1),
+        },
+      },
+    };
+    return await super.findAll(options);
   }
 
   static async createAdopt(pet, transaction) {
@@ -50,6 +73,23 @@ class AdoptService extends Service {
     };
 
     return await super.delete(options);
+  }
+
+  static async updateForAdopted({ idAdopter, status }, transaction) {
+    const payload = {
+      status,
+    };
+
+    const options = {
+      where: {
+        idAdopter: {
+          [sequelize.Op.eq]: uuidToBin(idAdopter, 1),
+        },
+      },
+      transaction,
+    };
+
+    return await super.update(payload, options);
   }
 }
 
